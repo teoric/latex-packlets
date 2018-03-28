@@ -1,0 +1,42 @@
+% \titleformat{\title}[display]{\normalfont\centering}{}{2ex}{\sectitle}
+% 
+% \titleformat{\subsection}[block]{\normalfont\centering}{\S. \thesubsection.}{2ex}{\textbf}
+% \titleformat{\subsubsection}[blocK]{\Normalfont\centering}{\S. \thesubsubsection.}{2ex}{\textbf}
+
+\RequirePackage{perafter}
+\def\part{\@startsection{part}{0}%
+  \z@{\linespacing\@plus\linespacing}{.5\linespacing}%
+  {\normalfont\bfseries\raggedright}}
+\def\specialsection{\@startsection{section}{1}%
+  \z@{\linespacing\@plus\linespacing}{.5\linespacing}%
+  {\normalfont\centering}}
+%\def\section{\@startsection{section}{1}%
+%  \z@{.7\linespacing\@plus\linespacing}{.5\linespacing}%
+%  {\normalfont\scshape\centering}}
+%\def\subsection{\@startsection{subsection}{2}%
+%  \z@{.5\linespacing\@plus.7\linespacing}{-.5em}%
+%  {\normalfont\bfseries}}
+% \def\subsubsection{\@startsection{subsubsection}{3}%
+%   \z@{.5\linespacing\@plus.7\linespacing}{-.5em}%
+%   {\normalfont\itshape}}
+\def\paragraph{\@startsection{paragraph}{4}%
+  \z@\z@{-\fontdimen2\font}%
+  {\normalfont\periodafter\emph}}
+\def\subparagraph{\@startsection{subparagraph}{5}%
+  \z@\z@{-\fontdimen2\font}%
+  {\normalfont\periodafter\emph}}
+
+\titleformat{\section}[runin]{\normalfont\centering}{\thesection.}{2ex}{\periodafter\textbf}
+\titleformat{\subsection}[runin]{\normalfont\centering}{\thesubsection.}{1.5ex}{\periodafter\textit}
+\titleformat{\subsubsection}[runin]{\normalfont\centering}{\thesubsubsection.}{1.5ex}{\periodafter\textit}
+
+%\titleformat{\paragraph}[runin]{\normalfont}{\S. \theparagraph.}{}{\sectitle}[.\qquad]
+
+%\titleformat{\paragraph}[runin]{\bfseries}{\S. \theparagraph.}{}{\sectitle}[.\qquad]
+\def\resetso{%
+    \sodef\textso{}{.125em}{.45em\@plus.08em\@minus.06em}%
+        {.275em\@plus.275em\@minus.183em}%
+}
+
+%\resetso
+

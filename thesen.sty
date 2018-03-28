@@ -1,0 +1,21 @@
+% provide these and subthese environments for old-style semiformal
+% arguing
+%\RequirePackage{amspar}
+\RequirePackage{relsize}
+\RequirePackage{xargs}
+\RequirePackage{setspace}
+\RequirePackage{perafter}
+\newcounter{these}
+\newcounter{subthese}[these]
+%\renewcommand{\thethese}{Th-\arabic{these}}
+\renewcommand{\thesubthese}{\thethese\,\alph{subthese}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{.5em}
+\newcommand{\laeuterrule}{\hrule width \textwidth}
+\newenvironmentx*{These}[1][1=\relax]{\begin{addmargin}{-1.5em}\tbfigures\vskip2\baselineskip\par
+\noindent\let\emph\textsfsl\begingroup\sffamily\relsize{+1}\refstepcounter{these}\textbf{\thethese.}\ifx#1\relax{}\phantomsection\addcontentsline{toc}{section}{\thethese}\enskip\else\phantomsection\addcontentsline{toc}{section}{\thethese~ #1}\enskip{}\periodafter\textit{#1}\quad{}\fi}{\par\vskip1.5em\endgroup\end{addmargin}}
+%\begingroup\relsize{+1}\refstepcounter{these}\textbf{\thethese.}\ifx#1\relax{}\else\enskip{}\periodafter\textit{#1}\fi\quad{}}{\par\endgroup}
+\newenvironmentx*{SubThese}[1][1=\relax]{\vskip.5em\par\noindent\begingroup\refstepcounter{subthese}\textbf{\thesubthese.}\ifx#1\quad{}\relax{}\else\enskip{}\textbf{#1}\quad{}\fi}{\endgroup}
+\newcommand{\trennlinie}{\vskip2ex\laeuterrule\vskip2ex}
+\newenvironment{Erlaeuterung}{\trennlinie\begin{addmargin}{0ex}\begingroup\par\noindent\textbf{Bezug zur Arbeit:}}{\par\endgroup\end{addmargin}\trennlinie}
+\newenvironment{Minderung}{\begingroup\relsize{-.5}\par}{\par\endgroup}

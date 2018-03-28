@@ -1,0 +1,43 @@
+%  From: Stephane Lepolozec (s.lepolozec@wanadoo.fr)
+%  
+%  
+%  Subject: Re: varioref v1.3c presents a bug?
+%  Newsgroups: comp.text.tex
+%  View: Complete Thread (2 articles)
+%  Original Format
+%  Date: 2002-02-24 04:17:40 PST
+%  
+%  Stephane,
+%  
+%  thanks for translating your message to english; my french learned in
+%  school
+%  unfortunately hasn't survived the last 20 years, but due to the sample i
+%  was
+%  already able to identify the problem from your original mail (but didn't
+%  manage to reply in time to save you the trouble)
+%  
+%  you are right, your problem is due to a change in varioref, but I
+%  consider
+%  myself blameless :-) the real culprit seems to be the following line in
+%  fancyref:
+%  
+%\newcommand*{\@fancyref@page@ref}{\@ifnextchar[%]
+%  \@vpageref{\@vpageref[\unskip]}%
+%}%
+%  
+%  the above calls an internal command of varioref, and not an official
+%  interface, so this should be addressed to Axel (hope his email is
+%  still correct).
+%  
+%  as a workaround add the following after loading fancyref:
+%  
+\makeatletter
+\renewcommand*{\@fancyref@page@ref}{%
+  \let\vref@space\space
+  \@ifnextchar[%]
+  \@vpageref{\@vpageref[\unskip]}%
+}%
+\makeatother
+%  
+%  hope this helps
+%  frank

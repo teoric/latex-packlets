@@ -1,0 +1,11 @@
+\RequirePackage[indentfirst]{titlesec}
+\RequirePackage{substr}
+\newcommand*\sectitle[1]{\so{#1}}
+%\newcommand*\periodafter[2]{#1{#2.}}
+\newcommand*\periodafter[2]{#1{#2%
+\IfBehindSubStringEmpty{.}{#2}{}{%
+\IfBehindSubStringEmpty{?}{#2}{}{%
+\IfBehindSubStringEmpty{!}{#2}{}{%
+\IfBehindSubStringEmpty{:}{#2}{}{%
+\IfBehindSubStringEmpty{,}{#2}{}{%
+\IfBehindSubStringEmpty{;}{#2}{}{.}}}}}}}}

@@ -1,0 +1,255 @@
+%    This is an example of a package that calls the amsrefs package
+%    and then changes various aspects of the bibliography style and
+%    citation style.
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\@ifundefined{NormalCatcodes}{%
+  \RequirePackage{pcatcode}\relax\PushCatcodes\NormalCatcodes
+}{}
+\ProvidesPackage{jeb-bibl}[2001/12/20 v1.12]
+\RequirePackage[author-year]{amsrefs}
+\RequirePackage{url}
+\RequirePackage{cmtt}
+
+\renewenvironment{biblist}[1][]{%
+  \normalfont \labelsep 0em\relax
+  \list{\BibLabel}{%
+    \resetbiblist{00}%
+    \usecounter{bib}%
+    #1\relax
+  }%
+  \sloppy
+  \interlinepenalty\@m  \clubpenalty\@M \widowpenalty\clubpenalty
+  \frenchspacing
+  \ResetCapSFCodes
+  \let\@bibdef\normal@bibdef
+}{%
+  \def\@noitemerr{\@latex@warning{Empty bibliography list}}%
+  \endlist
+}
+\def\cite@a#1#2{%
+  \cite@begingroup
+  \cites@init
+  \let\citesel#1\relax
+  \ifx\citesel\citesel@author \let\citeleft\@empty \let\citeright\@empty\fi
+% Author-Jahr in Klammern ohne Klammern drumrum  
+  \ifx\citesel\citesel@authoryear \let\citeleft\@empty \let\citeright\@empty\fi
+  \begingroup
+  \toks@{\endgroup \cite@b}%
+  \vdef\@tempa{#2}%
+  \edef\@tempa{\the\toks@{\@firstofone{\@xp\zap@space\@tempa} \@empty}}%
+  \@tempa
+}
+
+\def\citesel@authoryear#1#2#3#4#5{\PrintCNY{#3}{#4}}
+\DeclareRobustCommand{\citealp}[1]{%
+  \star@{\cite@a\citesel@authoryear{#1}}{}%
+}
+\renewcommand{\CiteNames}[1]{%
+  \textsc{\PrintSeries{\name}%
+  \lastName%
+    {}{ \textnormal{und} \lastName}%
+    {}{\discardName}%
+    {}{ \textnormal{\etaltext}\@\discardName}%
+    {}%
+    {#1}%
+    {}}%
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    Citation style:
+
+\renewcommand{\etaltext}{\textit{et al.}}
+%\renewcommand{\CiteNames}[1]{%
+%  \PrintSeries{\name}%
+%    {\lastName}%
+%    {}{ \etaltext\@\discardName}%
+%    {}{\discardName}%
+%    {}{ \etaltext\@\discardName}%
+%    {}%
+%    {#1}%
+%    {}%
+%}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    Author name treatment in the bibliography:
+
+%    No punctuation or space for initials.
+%\renewcommand{\InitialPunct}{}
+%\renewcommand{\InitialSpace}{}
+
+%\renewcommand{\sameauthors}[1]{\AuthorList{#1}}
+\renewcommand{\bysame}{---}
+%\renewcommand{\AuthorList}[1]{\PrintNames{author}{\begingroup\sc}{\endgroup}{#1}}%
+
+%\newcommand{\editor}{(Hrsg.)}
+
+
+%\newcommand{\colonise}[1]{#1:}
+%\newcommand{\commafy}[1]{#1,}
+%\newcommand{\commafyPrintThesisType}[1]{\PrintThesisType{#1},}
+\newcommand{\textitEnglishInitialCaps}[1]{\textit{\EnglishInitialCaps{#1}}}
+\newcommand{\commafytextit}[1]{\textit{#1},}
+\newcommand{\PrintEditorsAC}[1]{\PrintEditorsA{#1}:}
+\renewcommand{\PrintEditorsA}[1]{%
+  \PrintNames{editor}{}{ \textnormal{(Hrsg.)}}{#1}%
+}
+
+  \BibSpec{firstauthor}{
+   +{}{}{given}
+   +{}{ \textsc}{surname}
+   +{}{ }{jr}
+  }
+  \BibSpec{middleauthor}{
+   +{,}{}{transition}
+   +{}{ }{given}
+   +{}{ \textsc}{surname}
+   +{}{ }{jr}
+  }
+  \BibSpec{coauthor}{
+   +{}{ \textnormal{und}}{transition}
+   +{}{ }{given}
+   +{}{ \textsc}{surname}
+   +{}{ }{jr}
+  }
+  \BibSpec{lastauthor}{
+   +{}{ \textnormal{und}}{transition}
+   +{}{ }{given}
+   +{}{ \textsc}{surname}
+   +{}{ }{jr}
+  }
+
+%\BibSpec{firstauthor}{
+% +{}{}{surname}
+% +{}{ }{jr}
+% +{}{ }{initials}
+%}
+%
+%\BibSpec{coauthor}{
+% +{,}{ }{surname}
+% +{}{ }{jr}
+% +{}{ }{initials}
+%}
+%
+%% For more than two authors, the treatment is still the same.
+%\BibSpecAlias{middleauthor}{coauthor}
+%\BibSpecAlias{lastauthor}{coauthor}
+%
+%% Editor names are handled similarly.
+%\BibSpecAlias{firsteditor}{firstauthor}
+%\BibSpecAlias{coeditor}{coauthor}
+%\BibSpecAlias{middleeditor}{coeditor}
+%\BibSpecAlias{lasteditor}{coeditor}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    These specify the style for various entry types in the
+%    bibliography.
+
+\BibSpec{article}{%
+  +{}{\PrintAuthors}  {author}
+  +{}{\PrintEditorsA}  {editor}
+  +{}{ (}    {date}
+  +{}{}{label}
+  +{):}{ \EnglishInitialCaps}{title}
+  +{.}{ In: \textit}      {journal}
+  +{} { }      {volume}
+  +{} {\parenthesize}      {number}
+  +{} { \parenthesize}{status}
+  +{,}{ }             {pages}
+  +{,}{ }             {note}
+  +{.}{}              {transition}
+  +{.}{\newline \url}{url}
+}
+
+\BibSpec{book}{%
+  +{}{\PrintAuthors}  {author}
+  +{}{\PrintEditorsA}{editor}
+  +{}{ (}    {date}
+  %+{.}{ } {date}
+  +{}{}{label}
+  +{):}{ \textitEnglishInitialCaps}{title}
+  +{,}{ }{type}
+  %+{,}{ \EnglishInitialCaps}{booktitle}
+  +{,}{ \textitEnglishInitialCaps}{booktitle}
+  +{.}{ \PrintEdition}{edition}
+  +{.}{ }{series}
+  +{,}{ vol.~}{volume}
+  +{,}{ part~}{part}
+  +{.}{ }{place}
+  +{:}{ }{publisher}
+  +{,}{ }{organization}
+  +{,}{ ISBN }{isbn}
+  +{}{ \parenthesize}{status}
+  +{,}{ }{note}
+  +{.}{}{transition}
+  +{.}{\newline \url}{url}
+}
+
+\BibSpec{collection.article}{%
+  +{}{\PrintAuthors}{author}
+  %+{.}{ }{date}
+  +{}{ (}    {date}
+  +{}{}{label}
+  +{):}{ \textitEnglishInitialCaps}{title}
+  +{,}{ }{type}
+  +{.}{ In \PrintEditorsA}{editor}
+  +{}{\IfEmptyBibField{editor}{.}{:} \IfEmptyBibField{editor}{In: }{}\textitEnglishInitialCaps}{booktitle}
+  %+{: }{ \EnglishInitialCaps}{booktitle}
+  +{,}{ \PrintEdition}{edition}
+  +{.}{ Proc.\ }{conference}
+  +{.}{ }{series}
+  +{,}{ vol.~}{volume}
+  +{,}{ part~}{part}
+  +{.}{ }{place}
+  +{:}{ }{publisher}
+  +{,}{ }{organization}
+  +{.}{ \DashPages}{pages}
+  +{.}{ ISBN }{isbn}
+  +{}{ \parenthesize}{status}
+  +{.}{ }{note}
+  +{.}{}{transition}
+  +{.}{\newline \url}{url}
+}
+
+\BibSpec{report}{%
+  +{}{\PrintAuthors}{author}
+  +{}{\PrintEditorsA}{editor}
+  %+{.}{ }{date}
+  +{}{ (}    {date}
+  +{}{}{label}
+  +{):}{ \textitEnglishInitialCaps}{title}
+  +{,}{ }{type}
+  %+{,}{ \EnglishInitialCaps}{booktitle}
+  +{,}{ \textitEnglishInitialCaps}{booktitle}
+  +{.}{ Technical Report }{number}
+  +{,}{ }{series}
+  +{,}{ vol.~}{volume}
+  +{,}{ part~}{part}
+  +{.}{ }{place}
+  +{:}{ }{publisher}
+  +{,}{ }{organization}
+  +{,}{ }{institution}
+  +{,}{ ISBN }{isbn}
+  +{,}{ \eprint}      {eprint}
+  +{}{ \parenthesize}{status}
+  +{.}{ }{note}
+  +{.}{}{transition}
+  +{.}{\newline \url}{url}
+}
+
+\BibSpec{thesis}{%
+  +{}{\PrintAuthors}{author}
+  +{}{\PrintEditorsA}{editor}
+  +{}{ (}    {date}
+  +{}{}{label}
+  +{):}{ \textitEnglishInitialCaps}{title}
+  +{,}{ \PrintThesisType}{type}
+  +{,}{ part~}{part}
+  +{,}{ }{organization}
+  +{,}{ }{institution}
+  +{.}{ }{place}
+  +{}{ \parenthesize}{status}
+  +{.}{ }{note}
+  +{.}{}{transition}
+  +{.}{\newline \url}{url}
+}
+
+\endinput

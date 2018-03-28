@@ -1,0 +1,9 @@
+\RequirePackage{marvosym}
+\newcommand{\frage}[2]{\begingroup\color{orange}\ttfamily{}\textbf{#1}: \selectlanguage{german}\itshape{}#2\endgroup}
+\newcommand{\weg}[2]{\begingroup\color{red}\textbf{#1\Denarius}
+  [#2]\endgroup}
+\providecolor{darkgreen}{rgb}{0,0.666,0}
+\newcommand{\hin}[2]{\begingroup\color{darkgreen}\textbf{$\oplus${}#1} [#2]\endgroup}
+\newcommand{\hinundweg}[3]{\weg{#1}{#2}~\hin{}{#3}}
+\let\tausch=\hinundweg
+\newcommand{\upscite}[1]{\begingroup\color{purple}\textbf{ZITAT}: #1\endgroup}

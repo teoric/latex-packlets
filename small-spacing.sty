@@ -1,0 +1,69 @@
+%%%%%%%%%% Heading Spacing %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\DeclareSectionCommand[%
+  style=part,%
+  level=\z@,%
+  tocstyle=part,%
+  toclevel=\m@ne,%
+  tocindent=\z@,%
+  tocnumwidth=2em%
+]{part}
+\DeclareSectionCommand[%
+  style=section,%
+  level=1,%
+  indent=\z@,%
+  % beforeskip=-3.5ex \@plus -1ex \@minus -.2ex,%
+  % afterskip=2.3ex \@plus.2ex,%
+  beforeskip=-3.5ex \@plus -1ex \@minus -.2ex,%
+  afterskip=0.5ex \@plus.2ex,%
+  tocstyle=section,%
+  tocindent=0pt,%
+  tocnumwidth=1.5em%
+]{section}
+\DeclareSectionCommand[%
+  style=section,%
+  level=2,%
+  indent=\z@,%
+  % beforeskip=-3.25ex\@plus -1ex \@minus -.2ex,%
+  % afterskip=1.5ex \@plus .2ex,%
+  beforeskip=-2ex\@plus -1ex \@minus -.2ex,%
+  afterskip=0.25ex \@plus .2ex,%
+  tocstyle=subsection,%
+  tocindent=1.5em,%
+  tocnumwidth=2.3em%
+]{subsection}
+\DeclareSectionCommand[%
+  style=section,%
+  level=3,%
+  indent=\z@,%
+  % beforeskip=-3.25ex\@plus -1ex \@minus -.2ex,%
+  % afterskip=1.5ex \@plus .2ex,%
+  beforeskip=-1.25ex\@plus -1ex \@minus -.2ex,%
+  afterskip=0.001ex \@plus .2ex,%
+  tocstyle=subsection,%
+  tocindent=3.8em,%
+  tocnumwidth=3.2em%
+]{subsubsection}
+\DeclareSectionCommand[%
+  style=section,%
+  level=4,%
+  indent=\z@,%
+  beforeskip=3.25ex \@plus1ex \@minus.2ex,%
+  afterskip=-1em,%
+  tocstyle=subsection,%
+  tocindent=7.0em,%
+  tocnumwidth=4.1em%
+]{paragraph}
+\DeclareSectionCommand[%
+  style=section,%
+  level=5,%
+  indent=\scr@parindent,%
+  beforeskip=3.25ex \@plus1ex \@minus .2ex,%
+  afterskip=-1em,%
+  tocstyle=subsection,%
+  tocindent=10em,%
+  tocnumwidth=5em%
+]{subparagraph}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

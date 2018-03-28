@@ -1,0 +1,20 @@
+\makeatletter
+
+\newcommand*{\addsubsec}[1]{\subsection*{#1}%
+\addcontentsline{toc}{subsection}{#1}%
+}
+
+\newcommand*{\addsubsubsec}[1]{\subsubsection*{#1}%
+\addcontentsline{toc}{subsubsection}{#1}%
+}
+
+\newcommand*{\zitatnachweis}[1]{
+      \begin{flushright}
+        \begin{it}
+          #1     
+        \end{it}
+      \end{flushright}
+}
+
+
+\makeatother

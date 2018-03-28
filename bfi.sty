@@ -1,0 +1,75 @@
+%\newcommand{\ups}[1]{*\marginpar{{\sf\scriptsize* #1}}}
+\RequirePackage{relsize}
+\RequirePackage{ifpdf}
+\RequirePackage{ifxetex}
+\ifpdf
+% \pdfminorversion5
+% \pdfobjcompresslevel3
+\fi
+
+% \DeclareTextCommand{\C}{LY1}[1]
+% {{\o@lign{\relax#1\crcr\hidewidth\sh@ft{10}\raisebox{.4ex}{\smaller,}\hidewidth}}}
+% \DeclareTextCommand{\C}{T1}[1]
+% {{\o@lign{\relax#1\crcr\hidewidth\sh@ft{10}\raisebox{.4ex}{\smaller,}\hidewidth}}}
+% \DeclareTextCommand{\C}{OT1}[1]
+% {{\o@lign{\relax#1\crcr\hidewidth\sh@ft{10}\raisebox{.4ex}{\smaller,}\hidewidth}}}
+
+\def\bfiCommaBelow#1{\leavevmode{\setbox1=\hbox{{\smaller,}}%                          
+\setbox2=\hbox{{#1{}}}%
+\dimen0=\wd2%
+\dimen1=\ht2\advance\dimen1by-.7ex%
+\setbox1=\hbox to1\dimen0{\hss{\smaller,}\hss}%
+\rlap{\raise-1\dimen1\box1}%
+\hbox to1\dimen0{\hss#1\hss}}}%
+%\ifxetex
+\DeclareTextCommand{\C}{EU1}[1]{\bfiCommaBelow#1}
+%\else
+\DeclareTextCommand{\C}{T1}[1]{\bfiCommaBelow#1}
+%\fi
+\DeclareTextCommand{\C}{OT1}[1]{\bfiCommaBelow#1}
+\DeclareTextCommand{\C}{LY1}[1]{\bfiCommaBelow#1}
+
+% This is adapted from the \diatop macro in wsuipa.sty, which was
+% originally designed by Jean-Pierre Paillet.
+% und nochmal veraendert von mir, weil mir nicht gefallen hat,
+% dass die Breite nach dem breiteren Zeichen bestimmt wurde...
+
+\def\twoacc[#1|#2]{\leavevmode{\setbox1=\hbox{{#1{}}}%                          
+\setbox2=\hbox{{#2{}}}%
+\dimen0=\wd2%
+\dimen1=\ht2\advance\dimen1by-1ex%
+\setbox1=\hbox to1\dimen0{\hss#1\hss}%
+\rlap{\raise1\dimen1\box1}%
+\hbox to1\dimen0{\hss#2\hss}}}%
+\def\lv[#1]{\twoacc[\'|\={#1}]}
+\newcommand{\bfi}{\fontfamily{cmr}\fontshape{it}\selectfont\raisebox{-.15ex}{b}\makebox[-.2ex]{}fi}
+\newcommand{\BFI}{\fontshape{it}\selectfont\raisebox{-.15ex}{b}\makebox[-.2ex]{}fi}
+%
+% Einen Buchstaben über einen anderen setzen
+\def\hochbs[#1|#2]{\leavevmode{\setbox1=\hbox{{#1{}}}%
+\setbox2=\hbox{{#2{}}}%
+\dimen0=\wd2%
+\dimen1=\ht2\advance\dimen1by.2ex%
+\setbox1=\hbox to1\dimen0{\hss#1\hss}%
+\rlap{\raise1\dimen1\box1}%
+\hbox to1\dimen0{\hss#2\hss}}}%
+
+\newcommand{\klhochbs}[2]{\hochbs[{\textscale{.6}{#1}}|{#2}]}
+\newcommand{\klhochbss}[2]{\hochbs[{\scriptsize{#1}}|{#2}]}
+\newcommand{\altuml}[1]{\hochbs[{\textscale{.6}{e}}|{#1}]}
+\newcommand{\altumll}[1]{\hochbs[{\scriptsize{e}}|{#1}]}
+
+%\newcommand{\textsubscript}[1]{\raisebox{-.5ex}{#1}}
+\newcommand{\textSubScript}[1]{\raisebox{-.4ex}{\footnotesize #1}}
+\newcommand{\textSuperscript}[1]{\Supskr{#1}}
+%\let\tsb\textsubscript
+%\let\tsp\textsuperscript
+
+% Sprachwissenschaftliches
+\newcommand{\graphem}[1]{$\langle$#1$\rangle$}
+\newcommand{\phonem}[1]{/\textipa{#1}/}
+\newcommand{\phonet}[1]{[\textipa{#1}]}
+\newcommand{\Vgl}{V\kern-.25exgl. }
+
+% Pandoc
+\let\tightlist\relax
