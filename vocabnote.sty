@@ -1,0 +1,45 @@
+\newcommand{\vocabseparator}{]}
+\renewcommand{\vocabseparator}{}
+\newcommand{\vocabnote}[3][]{%
+    #2%
+    \def\tmp{#1}%
+    \def\tmptmp{#3}%
+    \footnote{\textbf{\thepoemline} \emph{#2}\hskip0.2ex\vocabseparator\, \ifx \tmp\empty\else \tmp{} \fi\ifx \tmptmp\empty\else ‚\tmptmp{}‘\fi}}
+\let\vocnote=\vocabnote
+\newcommand{\vocablemmanote}[4][]{%
+    #2%
+    \def\tmp{#1}%
+    \def\tmptmp{#4}%
+    \footnote{\textbf{\thepoemline} \emph{#3}\hskip0.2ex\vocabseparator\, \ifx \tmp\empty\else \tmp{} \fi\ifx \tmptmp\empty\else ‚\tmptmp{}‘\fi}}
+\let\voclemnote=\vocablemmanote
+
+\newlength{\vocabboxwidth}
+\setlength{\vocabboxwidth}{6em}
+\newlength{\phraseboxwidth}
+\setlength{\phraseboxwidth}{13em}
+\newlength{\vocabboxlinewidth}
+\setlength{\vocabboxlinewidth}{.82\linewidth}
+\newlength{\phraseboxlinewidth}
+\setlength{\phraseboxlinewidth}{.57\linewidth}
+\newcommand{\vocabbox}[2][]{%
+    \def\tmp{#1}%
+    \makebox[\vocabboxwidth][l]{\emph{#2} (Z. \ref{\ifx \tmp\empty word:#2\else word:#1\fi}):} \hfill\rule{\vocabboxlinewidth}{.4pt}\zeilen{1}
+}
+\newcommand{\phrasebox}[2][]{%
+    \def\tmp{#1}%
+    \makebox[\phraseboxwidth][l]{\emph{#2} (Z. \ref{\ifx \tmp\empty word:#2\else word:#1\fi}):} \hfill\rule{\phraseboxlinewidth}{.4pt}\zeilen{1}
+}
+\usepackage{forloop}
+\newcounter{looping}
+\newcommand{\zeilen}[1]{
+\begingroup
+    \parskip=1em
+    \forloop{looping}{0}{\value{looping} < #1}{%
+        \par{}\rule{\linewidth}{0.4pt}%
+    }\vskip2em\endgroup}
+\newcommand{\kurzzeilen}[1]{
+    \begingroup
+        \parskip=1em
+        \forloop{looping}{0}{\value{looping} < #1}{%
+            \par{}\rule{0.8\linewidth}{0.4pt}%
+        }\vskip2em\endgroup}

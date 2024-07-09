@@ -1,0 +1,47 @@
+\RequirePackage{etoolbox}
+\RequirePackage{multicol}
+\RequirePackage{poetry}
+\newcommand{\rechts}[1]{\strut\hfill\mbox{#1}}
+\poemlinenumstrue
+\setcounter{poemlinenumsevery}{5}
+\poemlinenumstrue
+\def\poemtitleprehook{%
+\bigskip\noindent}
+% patch title and author
+\makeatletter
+\renewcommand*{\titleauthorpoem}[3][]{%
+\advance\poem@poemno by1\stepcounter{poemno}%
+\advance\poem@abspoemno by1\stepcounter{abspoemno}%
+\def\thepoemtitle{#2}\def\thepoemauthor{#3}%
+\begingroup%
+\def\tmp{#1}%
+\poemauthorprehook%
+\poemauthorstyle\ifx\tmp\empty\else\tmp{} \fi #3%
+\poemauthorposthook%
+\endgroup%
+\begingroup%
+\poemtitleprehook%
+\poemtitlestyle #2%
+\poemtitleposthook%
+\endgroup%
+}%
+\makeatother
+% end patch
+\def\poemtitleposthook{}
+\def\poemauthorprehook{\bigskip}
+\def\poemauthorposthook{: }
+\def\poemtitlestyle{\normalfont\normalsize\itshape}
+\def\poemauthorstyle{\normalfont\normalsize}
+\AtBeginEnvironment{poem}{\parskip=0pt}
+\setlength{\poemindent}{\poemlinenumboxgap}
+\setlength{\poemindent}{\poemlinenumboxgap}
+\addtolength{\poemindent}{\poemlinenumboxwd}
+\usepackage[para]{footmisc}
+\deffootnote[2em]{2em}{2em}{{{\thefootnotemark}.~~}\setlength\parindent{1em}}
+\pagestyle{empty}
+\patchcmd{\makefootnoteparagraph}{\columnwidth}{\textwidth} {\typeout{Footnote patch success}}{\typeout{Footnote patch failed}}
+\makeatletter
+\setlength{\poemlinenumboxwd}{4em}
+\def\poemlinenumstyle{\hfill\small}
+\patchcmd{\poem@putlineno}{\hfil}{\hspace{2.5ex}} {\typeout{line number patch success}}{\typeout{line number failed}}
+\makeatother

@@ -1,6 +1,7 @@
 %%%%%%%%%% Heading Spacing %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeatletter
-\DeclareSectionCommand[%
+\ifcsname setkomafont\endcsname
+\RedeclareSectionCommand[%
   style=part,%
   level=\z@,%
   tocstyle=part,%
@@ -8,19 +9,31 @@
   tocindent=\z@,%
   tocnumwidth=2em%
 ]{part}
-\DeclareSectionCommand[%
+\ifcsname chapter\endcsname
+\RedeclareSectionCommand[%
+  style=chapter,%
+  level=\z@,%
+  tocstyle=chapter,%
+  toclevel=\m@ne,%
+  tocindent=\z@,%
+  tocnumwidth=2em%
+]{chapter}
+\fi
+\RedeclareSectionCommand[%
   style=section,%
   level=1,%
   indent=\z@,%
   % beforeskip=-3.5ex \@plus -1ex \@minus -.2ex,%
   % afterskip=2.3ex \@plus.2ex,%
-  beforeskip=-4ex \@plus -1.2ex \@minus -.24ex,%
-  afterskip=1.5ex \@plus.2ex,%
+  beforeskip=-2ex \@plus -1.2ex \@minus -.48ex,%
+  afterskip=0.5ex \@plus.2ex,%
   tocstyle=section,%
   tocindent=0pt,%
   tocnumwidth=1.5em%
 ]{section}
-\DeclareSectionCommand[%
+\ifcsname chapter\endcsname
+\else
+\RedeclareSectionCommand[%
   style=section,%
   level=2,%
   indent=\z@,%
@@ -32,7 +45,7 @@
   tocindent=1.5em,%
   tocnumwidth=2.3em%
 ]{subsection}
-\DeclareSectionCommand[%
+\RedeclareSectionCommand[%
   style=section,%
   level=3,%
   indent=\z@,%
@@ -48,22 +61,27 @@
   style=section,%
   level=4,%
   indent=\z@,%
-  beforeskip=3.25ex \@plus1ex \@minus.2ex,%
-  afterskip=-1em,%
+  % beforeskip=-3.25ex\@plus -1ex \@minus -.2ex,%
+  % afterskip=1.5ex \@plus .2ex,%
+  beforeskip=-1.25ex\@plus -1ex \@minus -.2ex,%
+  afterskip=0.001ex \@plus .2ex,%
   tocstyle=subsection,%
-  tocindent=7.0em,%
-  tocnumwidth=4.1em%
-]{paragraph}
+  tocindent=3.8em,%
+  tocnumwidth=3.2em%
+]{subsubsubsection}
 \DeclareSectionCommand[%
   style=section,%
   level=5,%
-  indent=\scr@parindent,%
-  beforeskip=3.25ex \@plus1ex \@minus .2ex,%
-  afterskip=-1em,%
+  indent=\z@,%
+  % beforeskip=-3.25ex\@plus -1ex \@minus -.2ex,%
+  % afterskip=1.5ex \@plus .2ex,%
+  beforeskip=-1.25ex\@plus -1ex \@minus -.2ex,%
+  afterskip=0.001ex \@plus .2ex,%
   tocstyle=subsection,%
-  tocindent=10em,%
-  tocnumwidth=5em%
-]{subparagraph}
+  tocindent=3.8em,%
+  tocnumwidth=3.2em%
+]{subsubsubsubsection}
+\fi\fi
 \makeatother
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
