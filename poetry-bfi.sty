@@ -1,7 +1,6 @@
 \RequirePackage{etoolbox}
 \RequirePackage{multicol}
 \RequirePackage{poetry}
-\newcommand{\rechts}[1]{\strut\hfill\mbox{#1}}
 \poemlinenumstrue
 \setcounter{poemlinenumsevery}{5}
 \poemlinenumstrue
@@ -36,7 +35,7 @@
 \setlength{\poemindent}{\poemlinenumboxgap}
 \setlength{\poemindent}{\poemlinenumboxgap}
 \addtolength{\poemindent}{\poemlinenumboxwd}
-\usepackage[para]{footmisc}
+% \usepackage[para]{footmisc}
 \deffootnote[2em]{2em}{2em}{{{\thefootnotemark}.~~}\setlength\parindent{1em}}
 \pagestyle{empty}
 \patchcmd{\makefootnoteparagraph}{\columnwidth}{\textwidth} {\typeout{Footnote patch success}}{\typeout{Footnote patch failed}}
