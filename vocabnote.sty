@@ -3,11 +3,13 @@
 \newfootnote{D}
 \newcounter{footnoteD}
 \renewcommand{\thefootnoteD}{\emph{\alph{footnoteD}}}
+\SelectFootnoteRule{default}
 \newcommand{\footnoteD}{%
   \stepcounter{footnoteD}%
   {\Footnotemark\thefootnoteD}\FootnotetextD{}}
 \MakePerPage{footnoteD}
 
+\SelectFootnoteRule{default}
 \newfootnote[para]{C}
 \newcounter{footnoteC}
 %\renewcommand{\thefootnoteC}{\fontfamily{MinionPro-OsF}\fontencoding{T1}\selectfont{[\arabic{footnoteC}]}}
