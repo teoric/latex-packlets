@@ -57,11 +57,23 @@
 \newcommand{\vocabnote}[3][]{%
   \vocablemmanote[#1]{#2}{#2}{#3}}
 \let\vocnote=\vocabnote
+\ifcsname thepoemline\endcsname
+  \let\thelinecounter=\thepoemline
+  \newcommand{\linecounter}{poemline}
+\else
+  \ifcsname thelinenumber\endcsname
+    \let\thelinecounter=\thelinenumber
+    \newcommand{\linecounter}{linenumber}
+  \else
+    \newcommand{\linecounter}\errmessage{No supported line numbering present.}
+    \let\thelinecounter=\linecounter
+  \fi
+\fi
 \newcommand{\vocablemmanotePara}[4][]{%
     #2\ifx\vocfootnote\freefootnote\textsuperscript{*}\fi%
     \def\tmp{#1}%
     \def\tmptmp{#4}%
-  \vocfootnote{\ifnum\the\value{previousline}=\the\value{poemline}\else\textbf{\thepoemline} \fi\emph{#3}\hskip0.2ex\vocabseparator{}\ifx \tmp\empty\else \tmp{}\fi\ifx \tmptmp\empty\else ‚\tmptmp{}‘\fi.}\setcounter{previousline}{\value{poemline}}}
+  \vocfootnote{\ifnum\the\value{previousline}=\the\value{\linecounter}\else\textbf{\thelinecounter} \fi\emph{#3}\hskip0.2ex\vocabseparator{}\ifx \tmp\empty\else \tmp{}\fi\ifx \tmptmp\empty\else ‚\tmptmp{}‘\fi.}\setcounter{previousline}{\value{\linecounter}}}
 \newcommand{\vocablemmanoteClassic}[4][]{%
     #2\ifx\vocfootnote\freefootnote\textsuperscript{*}\fi%
     \def\tmp{#1}%
