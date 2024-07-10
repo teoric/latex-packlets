@@ -108,30 +108,33 @@
 \newlength{\voclinenowidth}
 \setlength{\voclinenowidth}{3ex}
 \newcommand{\vocablemmaComment}[4][]{%
-  % arguments: [remark before]{text}{lemma}{comment}
-    #2\ifx\commentfootnote\freefootnoteE\textsuperscript{\textdagger}\fi%
-    \def\tmp{#1}% remark before
-    \def\tmptmp{#4}% comment
-  \commentfootnote{\ifnum\the\value{previousCommentline}=\the\value{\linecounter}\else\ifcommentPerline\newline\makebox[\voclinenowidth][r]{\textbf{\thelinecounter}}
-  \else\textbf{\thelinecounter} \fi\fi\emph{#3}\hskip0.2ex\commentseparator{}\periodafter{\ifx \tmp\empty\else \tmp{}\fi\ifx \tmptmp\empty\else{} \tmptmp{}\fi}}\setcounter{previousCommentline}{\value{\linecounter}}}
+% arguments: [remark before]{text}{lemma}{comment}
+  \def\tmp{#1}% remark before
+  \def\tmptmp{#4}% comment
+  #2\ifx\commentfootnote\freefootnoteE\textsuperscript{\textdagger}\fi%
+  \commentfootnote{%
+    \ifnum\the\value{previousCommentline}=\the\value{\linecounter}\else\ifcommentPerline\newline\makebox[\voclinenowidth][r]{\textbf{\thelinecounter}} \else\textbf{\thelinecounter} \fi\fi%
+    \emph{#3}\/\commentseparator{}%
+    \periodafter{\ifx \tmp\empty\else \tmp{}\fi\ifx \tmptmp\empty\else{} \tmptmp{}\fi}}\setcounter{previousCommentline}{\value{\linecounter}}}
 \let\voclemCom=\vocablemmaComment
 \newcommand{\vocablemmanotePara}[4][]{%
-  % arguments: [remark before]{text}{lemma}{meaning}
-    #2\ifx\vocfootnote\freefootnoteC\textsuperscript{*}\fi%
-    \def\tmp{#1}%
-    \def\tmptmp{#4}%
-  \vocfootnote{\ifnum\the\value{previousline}=\the\value{\linecounter}\else\ifvocPerline\newline\makebox[\voclinenowidth][r]{\textbf{\thelinecounter}}
-    \else\textbf{\thelinecounter}
-    \fi\fi\emph{#3}\hskip0.2ex\vocabseparator{}\periodafter{\ifx \tmp\empty\else
-    \tmp{}\fi\ifx \tmptmp\empty\else
-  ‚\tmptmp{}‘\fi}}\setcounter{previousline}{\value{\linecounter}}}
+% arguments: [remark before]{text}{lemma}{meaning}
+  \def\tmp{#1}%
+  \def\tmptmp{#4}%
+  #2\ifx\vocfootnote\freefootnoteC\textsuperscript{*}\fi%
+  \vocfootnote{%
+    \ifnum\the\value{previousline}=\the\value{\linecounter}\else\ifvocPerline\newline\makebox[\voclinenowidth][r]{\textbf{\thelinecounter}} \else\textbf{\thelinecounter} \fi\fi%
+    \emph{#3}\hskip0.2ex\vocabseparator{}%
+    \periodafter{\ifx \tmp\empty\else\tmp{}\fi\ifx \tmptmp\empty\else ‚\tmptmp{}‘\fi}}\setcounter{previousline}{\value{\linecounter}}}
 \let\commentfootnote=\freefootnoteE
 \newcommand{\vocablemmanoteClassic}[4][]{%
-  % arguments: [remark before]{text}{lemma}{meaning}
-    #2\ifx\vocfootnote\freefootnoteD\textsuperscript{*}\fi%
-    \def\tmp{#1}%
-    \def\tmptmp{#4}%
-  \vocfootnote{\textbf{\thepoemline} \emph{#3}\hskip0.2ex\vocabseparator{} \ifx \tmp\empty\else \tmp{} \fi\ifx \tmptmp\empty\else ‚\tmptmp{}‘\fi}}
+% arguments: [remark before]{text}{lemma}{meaning}
+  \def\tmp{#1}%
+  \def\tmptmp{#4}%
+  #2\ifx\vocfootnote\freefootnoteD\textsuperscript{*}\fi%
+  \vocfootnote{%
+    \textbf{\thepoemline} \emph{#3}\hskip0.2ex\vocabseparator{}
+    \ifx \tmp\empty\else \tmp{} \fi\ifx \tmptmp\empty\else ‚\tmptmp{}‘\fi}}
 \newcommand{\classicVocabnotes}{
     \let\vocablemmanote=\vocablemmanoteClassic
     \let\voclemnote=\vocablemmanote
