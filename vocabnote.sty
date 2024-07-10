@@ -1,23 +1,91 @@
 \RequirePackage{poetry-bfi}
+\usepackage[perpage,para*]{manyfoot}
+\newfootnote{D}
+\newcounter{footnoteD}
+\renewcommand{\thefootnoteD}{\emph{\alph{footnoteD}}}
+\newcommand{\footnoteD}{%
+  \stepcounter{footnoteD}%
+  {\Footnotemark\thefootnoteD}\FootnotetextD{}}
+\MakePerPage{footnoteD}
+
+\newfootnote[para]{C}
+\newcounter{footnoteC}
+%\renewcommand{\thefootnoteC}{\fontfamily{MinionPro-OsF}\fontencoding{T1}\selectfont{[\arabic{footnoteC}]}}
+\renewcommand{\thefootnoteC}{\alph{footnoteC}}
+\newcommand{\footnoteC}{%
+  \stepcounter{footnoteC}%
+  {\Footnotemark\thefootnoteC}\FootnotetextC{}}
+% \let\fnA\footnoteA
+\MakePerPage{footnoteC}
+
 \makeatletter
-\def\blfootnote{\gdef\@thefnmark{}\@footnotetext}
-\renewcommand{\thefootnote}{\alph{footnote}}
+% counterless footnote from
+% https://tex.stackexchange.com/questions/562763/footnote-without-reference
+\newcommand\freefootnoteNormal[1]{%
+  \let\svthefootnote\thefootnote
+  \begingroup\freefootnotedef
+  \let\thefootnote\relax%
+  \footnotetext{#1}%
+  \let\thefootnote\svthefootnote%
+  \endgroup
+}
+\newcommand\freefootnoteD[1]{%
+  \let\svthefootnote\thefootnoteD
+  \begingroup\freefootnotedef
+  \let\thefootnoteD\relax%
+  \FootnotetextD{}{#1}%
+  \let\thefootnoteD\svthefootnote%
+  \endgroup
+}
+\newcommand\freefootnoteC[1]{%
+  \let\svthefootnote\thefootnoteC
+  \begingroup\freefootnotedef
+  \let\thefootnoteC\relax%
+  \FootnotetextC{}{#1}%
+  \let\thefootnote\svthefootnote%
+  \endgroup
+}
+%%% end
 \makeatother
 \ifcsname rechts\endcsname\else
   \newcommand{\rechts}[1]{\strut\hfill\mbox{#1}}
 \fi
 % \newcommand{\vocabseparator}{]}
+\newcounter{previousline}
+\setcounter{previousline}{-1}
 \newcommand{\vocabseparator}{\,}
 \newcommand{\vocabnote}[3][]{%
   \vocablemmanote[#1]{#2}{#2}{#3}}
 \let\vocnote=\vocabnote
-\newcommand{\vocablemmanote}[4][]{%
-    #2%
+\newcommand{\vocablemmanotePara}[4][]{%
+    #2\ifx\vocfootnote\freefootnote\textsuperscript{*}\fi%
     \def\tmp{#1}%
     \def\tmptmp{#4}%
-  \footnote{\textbf{\thepoemline} \emph{#3}\hskip0.2ex\vocabseparator{} \ifx \tmp\empty\else \tmp{} \fi\ifx \tmptmp\empty\else ‚\tmptmp{}‘\fi}}
-\let\voclemnote=\vocablemmanote
-
+  \vocfootnote{\ifnum\the\value{previousline}=\the\value{poemline}\else\textbf{\thepoemline} \fi\emph{#3}\hskip0.2ex\vocabseparator{}\ifx \tmp\empty\else \tmp{}\fi\ifx \tmptmp\empty\else ‚\tmptmp{}‘\fi.}\setcounter{previousline}{\value{poemline}}}
+\newcommand{\vocablemmanoteClassic}[4][]{%
+    #2\ifx\vocfootnote\freefootnote\textsuperscript{*}\fi%
+    \def\tmp{#1}%
+    \def\tmptmp{#4}%
+  \vocfootnote{\textbf{\thepoemline} \emph{#3}\hskip0.2ex\vocabseparator{} \ifx \tmp\empty\else \tmp{} \fi\ifx \tmptmp\empty\else ‚\tmptmp{}‘\fi}}
+\newcommand{\classicVocabnotes}{
+    \let\vocablemmanote=\vocablemmanoteClassic
+    \let\voclemnote=\vocablemmanote
+    \let\freefootnote=\freefootnoteD
+    \let\vocfootnote=\footnoteD
+  }
+\newcommand{\paraVocabnotes}{
+  \let\vocablemmanote=\vocablemmanotePara
+  \let\voclemnote=\vocablemmanotePara
+  \let\freefootnote=\freefootnoteC
+  \let\vocfootnote\freefootnote
+}
+\newcommand{\normalVocabnotes}{
+  \let\vocablemmanote=\vocablemmanoteClassic
+  \let\voclemnote=\vocablemmanoteClassic
+  \let\freefootnote=\freefootnoteNormal
+  \let\vocfootnote\freefootnoteNormal
+}
+\classicVocabnotes
 \newlength{\vocabboxwidth}
 \setlength{\vocabboxwidth}{6em}
 \newlength{\phraseboxwidth}

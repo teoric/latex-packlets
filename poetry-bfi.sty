@@ -36,7 +36,13 @@
 \setlength{\poemindent}{\poemlinenumboxgap}
 \addtolength{\poemindent}{\poemlinenumboxwd}
 % \usepackage[para]{footmisc}
-\deffootnote[2em]{2em}{2em}{{{\thefootnotemark}.~~}\setlength\parindent{1em}}
+\def\normalfootnotedef{\deffootnote[2em]{2em}{2em}{{{\thefootnotemark}.~~}\setlength\parindent{1em}}}
+\normalfootnotedef
+\def\resetfootnotedef{\deffootnote[1em]{1.5em}{1em}{%
+    \textsuperscript{\thefootnotemark}%
+}}
+\def\freefootnotedef{\deffootnote[2em]{2em}{2em}{%
+}}
 \pagestyle{empty}
 \patchcmd{\makefootnoteparagraph}{\columnwidth}{\textwidth} {\typeout{Footnote patch success}}{\typeout{Footnote patch failed}}
 \makeatletter
