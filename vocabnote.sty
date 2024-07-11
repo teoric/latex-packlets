@@ -1,12 +1,5 @@
 % \RequirePackage{poetry-bfi}
 \RequirePackage{substr}
-\newcommand*\periodafter[1]{#1%
-\IfBehindSubStringEmpty{.}{#1}{}{%
-\IfBehindSubStringEmpty{?}{#1}{}{%
-\IfBehindSubStringEmpty{!}{#1}{}{%
-\IfBehindSubStringEmpty{:}{#1}{}{%
-\IfBehindSubStringEmpty{,}{#1}{}{%
-\IfBehindSubStringEmpty{;}{#1}{}{.}}}}}}}
 \usepackage[perpage,para*]{manyfoot}
 \SelectFootnoteRule{default}
 \newfootnote[para]{C}
@@ -36,7 +29,6 @@
   {\Footnotemark\thefootnoteE}\FootnotetextE{}}
 \MakePerPage{footnoteE}
 
-\makeatletter
 % counterless footnote from
 % https://tex.stackexchange.com/questions/562763/footnote-without-reference
 \newcommand\freefootnoteNormal[1]{%
@@ -72,15 +64,22 @@
   \endgroup
 }
 %%% end
-\makeatother
+\makeatletter
+\newcommand{\@ddperiod@fter}[1]{#1%
+  \IfBehindSubStringEmpty{.}{#1}{}{%
+  \IfBehindSubStringEmpty{?}{#1}{}{%
+  \IfBehindSubStringEmpty{!}{#1}{}{%
+  \IfBehindSubStringEmpty{:}{#1}{}{%
+  \IfBehindSubStringEmpty{,}{#1}{}{%
+  \IfBehindSubStringEmpty{;}{#1}{}{.}}}}}}}
 \ifcsname rechts\endcsname\else
   \newcommand{\rechts}[1]{\strut\hfill\mbox{#1}}
 \fi
 % \newcommand{\vocabseparator}{]}
-\newcounter{previousline}
-\setcounter{previousline}{-1}
-\newcounter{previousCommentline}
-\setcounter{previousCommentline}{-1}
+\newcounter{pr@viousline}
+\setcounter{pr@viousline}{-1}
+\newcounter{pr@viousCommentline}
+\setcounter{pr@viousCommentline}{-1}
 \newcommand{\vocabseparator}{\,}
 \newcommand{\commentseparator}{:\,}
 \newcommand{\vocabnote}[3][]{%
@@ -117,9 +116,9 @@
   \def\tmptmp{#4}% comment
   #2\ifcommentMark\commentMark\fi%
   \commentfootnote{%
-    \ifnum\the\value{previousCommentline}=\the\value{\linecounter}\else\ifcommentPerline\ifnum\the\value{previousCommentline}>0\newline\fi\makebox[\voclinenowidth][r]{\textbf{\thelinecounter}} \else\textbf{\thelinecounter} \fi\fi%
+    \ifnum\the\value{pr@viousCommentline}=\the\value{\linecounter}\else\ifcommentPerline\ifnum\the\value{pr@viousCommentline}>0\newline\fi\makebox[\voclinenowidth][r]{\textbf{\thelinecounter}} \else\textbf{\thelinecounter} \fi\fi%
     \emph{#3}\/\commentseparator{}%
-    \periodafter{\ifx \tmp\empty\else \tmp{}\fi\ifx \tmptmp\empty\else{} \tmptmp{}\fi}}\setcounter{previousCommentline}{\value{\linecounter}}}
+    \@ddperiod@fter{\ifx \tmp\empty\else \tmp{}\fi\ifx \tmptmp\empty\else{} \tmptmp{}\fi}}\setcounter{pr@viousCommentline}{\value{\linecounter}}}
 \let\voclemCom=\vocablemmaComment
 \newcommand{\vocablemmanotePara}[4][]{%
 % arguments: [remark before]{text}{lemma}{meaning}
@@ -127,9 +126,9 @@
   \def\tmptmp{#4}%
   #2\ifx\vocMarkc\vocMark\fi%
   \vocfootnote{%
-    \ifnum\the\value{previousline}=\the\value{\linecounter}\else\ifvocPerline\ifnum\the\value{previousline}>0\newline\fi\makebox[\voclinenowidth][r]{\textbf{\thelinecounter}} \else\textbf{\thelinecounter} \fi\fi%
+    \ifnum\the\value{pr@viousline}=\the\value{\linecounter}\else\ifvocPerline\ifnum\the\value{pr@viousline}>0\newline\fi\makebox[\voclinenowidth][r]{\textbf{\thelinecounter}} \else\textbf{\thelinecounter} \fi\fi%
     \emph{#3}\hskip0.2ex\vocabseparator{}%
-    \periodafter{\ifx \tmp\empty\else\tmp{}\fi\ifx \tmptmp\empty\else ‚\tmptmp{}‘\fi}}\setcounter{previousline}{\value{\linecounter}}}
+    \@ddperiod@fter{\ifx \tmp\empty\else\tmp{}\fi\ifx \tmptmp\empty\else ‚\tmptmp{}‘\fi}}\setcounter{pr@viousline}{\value{\linecounter}}}
 \let\commentfootnote=\freefootnoteE
 \newcommand{\vocablemmanoteClassic}[4][]{%
 % arguments: [remark before]{text}{lemma}{meaning}
@@ -139,23 +138,22 @@
   \vocfootnote{%
     \textbf{\thepoemline} \emph{#3}\hskip0.2ex\vocabseparator{}
     \ifx \tmp\empty\else \tmp{} \fi\ifx \tmptmp\empty\else ‚\tmptmp{}‘\fi}}
+\makeatother
 \newcommand{\classicVocabnotes}{
     \let\vocablemmanote=\vocablemmanoteClassic
     \let\voclemnote=\vocablemmanote
-    \let\freefootnote=\freefootnoteD
     \let\vocfootnote=\footnoteD
   }
 \newcommand{\paraVocabnotes}{
   \let\vocablemmanote=\vocablemmanotePara
   \let\voclemnote=\vocablemmanotePara
-  \let\freefootnote=\freefootnoteC
-  \let\vocfootnote\freefootnote
+  \let\vocfootnote=\freefootnoteC
 }
 \newcommand{\normalVocabnotes}{
   \let\vocablemmanote=\vocablemmanoteClassic
   \let\voclemnote=\vocablemmanoteClassic
   \let\freefootnote=\freefootnoteNormal
-  \let\vocfootnote\footnote
+  \let\vocfootnote=\footnote
 }
 \newcommand{\resetMarks}{
   \ifx\commentfootnote\freefootnoteE\commentMarktrue\fi%
@@ -178,17 +176,14 @@
     \def\tmp{#1}%
     \makebox[\phraseboxwidth][l]{\emph{#2} (Z. \ref{\ifx \tmp\empty word:#2\else word:#1\fi}):} \hfill\rule{\phraseboxlinewidth}{.4pt}\zeilen{1}
 }
+\makeatother
 \usepackage{forloop}
 \newcounter{looping}
-\newcommand{\zeilen}[1]{
+\newcommand{\laengezeilen}[2]{
 \begingroup
     \parskip=1em
     \forloop{looping}{0}{\value{looping} < #1}{%
-        \par{}\rule{\linewidth}{0.4pt}%
+        \par{}\rule{#2}{0.4pt}%
     }\vskip2em\endgroup}
-\newcommand{\kurzzeilen}[1]{
-    \begingroup
-        \parskip=1em
-        \forloop{looping}{0}{\value{looping} < #1}{%
-            \par{}\rule{0.8\linewidth}{0.4pt}%
-        }\vskip2em\endgroup}
+\newcommand{\zeilen}[1]{\laengezeilen{#1}{\linewidth}}
+\newcommand{\kurzzeilen}[1]{\laengezeilen{#1}{0.8\linewidth}}
