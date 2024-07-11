@@ -117,7 +117,7 @@
   \def\tmptmp{#4}% comment
   #2\ifcommentMark\commentMark\fi%
   \commentfootnote{%
-    \ifnum\the\value{previousCommentline}=\the\value{\linecounter}\else\ifcommentPerline\newline\makebox[\voclinenowidth][r]{\textbf{\thelinecounter}} \else\textbf{\thelinecounter} \fi\fi%
+    \ifnum\the\value{previousCommentline}=\the\value{\linecounter}\else\ifcommentPerline\ifnum\the\value{previousCommentline}>0\newline\fi\makebox[\voclinenowidth][r]{\textbf{\thelinecounter}} \else\textbf{\thelinecounter} \fi\fi%
     \emph{#3}\/\commentseparator{}%
     \periodafter{\ifx \tmp\empty\else \tmp{}\fi\ifx \tmptmp\empty\else{} \tmptmp{}\fi}}\setcounter{previousCommentline}{\value{\linecounter}}}
 \let\voclemCom=\vocablemmaComment
@@ -127,7 +127,7 @@
   \def\tmptmp{#4}%
   #2\ifx\vocMarkc\vocMark\fi%
   \vocfootnote{%
-    \ifnum\the\value{previousline}=\the\value{\linecounter}\else\ifvocPerline\newline\makebox[\voclinenowidth][r]{\textbf{\thelinecounter}} \else\textbf{\thelinecounter} \fi\fi%
+    \ifnum\the\value{previousline}=\the\value{\linecounter}\else\ifvocPerline\ifnum\the\value{previousline}>0\newline\fi\makebox[\voclinenowidth][r]{\textbf{\thelinecounter}} \else\textbf{\thelinecounter} \fi\fi%
     \emph{#3}\hskip0.2ex\vocabseparator{}%
     \periodafter{\ifx \tmp\empty\else\tmp{}\fi\ifx \tmptmp\empty\else ‚\tmptmp{}‘\fi}}\setcounter{previousline}{\value{\linecounter}}}
 \let\commentfootnote=\freefootnoteE
