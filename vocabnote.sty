@@ -81,7 +81,8 @@
 \newcounter{pr@viousCommentline}
 \setcounter{pr@viousCommentline}{-1}
 \newcommand{\vocabseparator}{\,}
-\newcommand{\commentseparator}{:\,}
+%\newcommand{\commentseparator}{:\,}
+\newcommand{\commentseparator}{\,}
 \newcommand{\vocabnote}[3][]{%
   % arguments: [lemma]{text}{meaning}
   \vocablemmanote[#1]{#2}{#2}{#3}}
@@ -110,7 +111,7 @@
 \setlength{\voclinenowidth}{3ex}
 \newcommand{\vocMark}{\textsuperscript{*}}
 \newcommand{\commentMark}{\textsuperscript{\textdagger}}
-\newcommand{\vocablemmaComment}[4][]{%
+\newcommand{\vocablemmaCommentPara}[4][]{%
 % arguments: [remark before]{text}{lemma}{comment}
   \def\tmp{#1}% remark before
   \def\tmptmp{#4}% comment
@@ -119,7 +120,6 @@
     \ifnum\the\value{pr@viousCommentline}=\the\value{\linecounter}\else\ifcommentPerline\ifnum\the\value{pr@viousCommentline}>0\newline\fi\makebox[\voclinenowidth][r]{\textbf{\thelinecounter}} \else\textbf{\thelinecounter} \fi\fi%
     \emph{#3}\/\commentseparator{}%
     \@ddperiod@fter{\ifx \tmp\empty\else \tmp{}\fi\ifx \tmptmp\empty\else{} \tmptmp{}\fi}}\setcounter{pr@viousCommentline}{\value{\linecounter}}}
-\let\voclemCom=\vocablemmaComment
 \newcommand{\vocablemmanotePara}[4][]{%
 % arguments: [remark before]{text}{lemma}{meaning}
   \def\tmp{#1}%
@@ -138,22 +138,39 @@
   \vocfootnote{%
     \textbf{\thepoemline} \emph{#3}\hskip0.2ex\vocabseparator{}
     \ifx \tmp\empty\else \tmp{} \fi\ifx \tmptmp\empty\else ‚\tmptmp{}‘\fi}}
+\newcommand{\vocablemmaCommentClassic}[4][]{%
+% arguments: [remark before]{text}{lemma}{comment}
+  \def\tmp{#1}% remark before
+  \def\tmptmp{#4}% comment
+  #2\ifcommentMark\commentMark\fi%
+  \commentfootnote{%
+    \textbf{\thepoemline} \emph{#3}\/\commentseparator{}%
+    \@ddperiod@fter{\ifx \tmp\empty\else \tmp{}\fi\ifx \tmptmp\empty\else{} \tmptmp{}\fi}}\setcounter{pr@viousCommentline}{\value{\linecounter}}}
 \makeatother
 \newcommand{\classicVocabnotes}{
     \let\vocablemmanote=\vocablemmanoteClassic
     \let\voclemnote=\vocablemmanote
     \let\vocfootnote=\footnoteD
+    \let\vocablemmaComment=\vocablemmaCommentClassic
+    \let\voclemCom=\vocablemmaCommentClassic
+    \let\commentfootnote=\freefootnoteE
   }
 \newcommand{\paraVocabnotes}{
   \let\vocablemmanote=\vocablemmanotePara
   \let\voclemnote=\vocablemmanotePara
   \let\vocfootnote=\freefootnoteC
+  \let\vocablemmaComment=\vocablemmaCommentPara
+  \let\voclemCom=\vocablemmaCommentPara
+  \let\commentfootnote=\freefootnoteC
 }
 \newcommand{\normalVocabnotes}{
   \let\vocablemmanote=\vocablemmanoteClassic
   \let\voclemnote=\vocablemmanoteClassic
+  \let\vocablemmaComment=\vocablemmaCommentClassic
+  \let\voclemCom=\vocablemmaCommentClassic
   \let\freefootnote=\freefootnoteNormal
   \let\vocfootnote=\footnote
+  \let\commentfootnote=\footnote
 }
 \newcommand{\resetMarks}{
   \ifx\commentfootnote\freefootnoteE\commentMarktrue\fi%
