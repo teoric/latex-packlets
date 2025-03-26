@@ -145,7 +145,7 @@
   #2\ifcommentMark\commentMark\fi%
   \commentfootnote{%
     \textbf{\thepoemline} \emph{#3}\/\commentseparator{}%
-    \@ddperiod@fter{\ifx \tmp\empty\else \tmp{}\fi\ifx \tmptmp\empty\else{} \tmptmp{}\fi}}\setcounter{pr@viousCommentline}{\value{\linecounter}}}
+    {\ifx \tmp\empty\else \tmp{}\fi\ifx \tmptmp\empty\else{} \tmptmp{}\fi}}}
 \makeatother
 \newcommand{\classicVocabnotes}{
     \let\vocablemmanote=\vocablemmanoteClassic
