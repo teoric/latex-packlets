@@ -112,7 +112,7 @@
 \newcommand{\vocMark}{\textsuperscript{*}}
 \newcommand{\commentMark}{\textsuperscript{\textdagger}}
 \newcommand{\vocablemmanote}[4][]{%
-  \vocablemmanoteFull[#1]{#2}{#3}{#4}{}
+  \vocablemmanoteFull[#1]{#2}{#3}{#4}{}%
 }
 \newcommand{\vocablemmaCommentPara}[4][]{%
 % arguments: [remark before]{text}{lemma}{comment}
@@ -141,7 +141,7 @@
   \def\tmptmptmp{#5}%
   #2\ifx\vocfootnote\freefootnoteD\vocMark\fi%
   \vocfootnote{%
-    \textbf{\thepoemline} \emph{#3}\hskip0.2ex\vocabseparator{}
+    \textbf{\thepoemline} \emph{#3}\hskip0.2ex\vocabseparator{}%
     \ifx \tmp\empty\else \tmp{} \fi\ifx \tmptmp\empty\else ‚\tmptmp{}‘\ifx \tmptmptmp\empty\else\ \fi\fi\ifx \tmptmptmp\empty\else \tmptmptmp{}\fi}}
 \newcommand{\vocablemmaCommentClassic}[4][]{%
 % arguments: [remark before]{text}{lemma}{comment}
