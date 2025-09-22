@@ -121,14 +121,14 @@
   #2\ifcommentMark\commentMark\fi%
   \commentfootnote{%
     \ifnum\the\value{pr@viousCommentline}=\the\value{\linecounter}\else\ifcommentPerline\ifnum\the\value{pr@viousCommentline}>0\newline\fi\makebox[\voclinenowidth][r]{\textbf{\thelinecounter}} \else\textbf{\thelinecounter} \fi\fi%
-    \emph{#3}\/\commentseparator{}%
-    \@ddperiod@fter{\ifx \tmp\empty\else \tmp{}\fi\ifx \tmptmp\empty\else{} \tmptmp{}\fi}}\setcounter{pr@viousCommentline}{\value{\linecounter}}}
+    \emph{#3}\/\hskip0.1ex\commentseparator{}%
+    \@ddperiod@fter{\ifx\tmp\empty\else\tmp{}\fi\ifx \tmptmp\empty\else\tmptmp{}\fi}}\setcounter{pr@viousCommentline}{\value{\linecounter}}}
 \newcommand{\vocablemmanoteParaFull}[5][]{%
 % arguments: [remark before]{text}{lemma}{meaning}{comment}
   \def\tmp{#1}%
   \def\tmptmp{#4}%
   \def\tmptmptmp{#5}%
-  #2\ifx\vocMarkc\vocMark\fi%
+  #2\ifvocMark\vocMark\fi%
   \vocfootnote{%
     \ifnum\the\value{pr@viousline}=\the\value{\linecounter}\else\ifvocPerline\ifnum\the\value{pr@viousline}>0\newline\fi\makebox[\voclinenowidth][r]{\textbf{\thelinecounter}} \else\textbf{\thelinecounter} \fi\fi%
     \emph{#3}\hskip0.1ex\vocabseparator{}%
@@ -142,15 +142,15 @@
   #2\ifx\vocfootnote\freefootnoteD\vocMark\fi%
   \vocfootnote{%
     \textbf{\thepoemline} \emph{#3}\hskip0.1ex\vocabseparator{}%
-    \ifx \tmp\empty\else \tmp{} \fi\ifx \tmptmp\empty\else ‚\tmptmp{}‘\ifx \tmptmptmp\empty\else\ \fi\fi\ifx \tmptmptmp\empty\else \tmptmptmp{}\fi}}
+    \ifx\tmp\empty\else\tmp{} \fi\ifx\tmptmp\empty\else ‚\tmptmp{}‘\ifx\tmptmptmp\empty\else\ \fi\fi\ifx\tmptmptmp\empty\else \tmptmptmp{}\fi}}
 \newcommand{\vocablemmaCommentClassic}[4][]{%
 % arguments: [remark before]{text}{lemma}{comment}
   \def\tmp{#1}% remark before
   \def\tmptmp{#4}% comment
   #2\ifcommentMark\commentMark\fi%
   \commentfootnote{%
-    \textbf{\thepoemline} \emph{#3}\/\commentseparator{}%
-    {\ifx \tmp\empty\else \tmp{}\fi\ifx \tmptmp\empty\else{} \tmptmp{}\fi}}}
+    \textbf{\thepoemline} \emph{#3}\/\hskip0.1ex\commentseparator{}%
+    {\ifx\tmp\empty\else\tmp{} \fi\ifx\tmptmp\empty\else\tmptmp{}\fi}}}
 \makeatother
 \let\voclemnote=\vocablemmanote
 \newcommand{\classicVocabnotes}{
