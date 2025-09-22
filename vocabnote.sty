@@ -122,7 +122,7 @@
   \commentfootnote{%
     \ifnum\the\value{pr@viousCommentline}=\the\value{\linecounter}\else\ifcommentPerline\ifnum\the\value{pr@viousCommentline}>0\newline\fi\makebox[\voclinenowidth][r]{\textbf{\thelinecounter}} \else\textbf{\thelinecounter} \fi\fi%
     \emph{#3}\/\hskip0.1ex\commentseparator{}%
-    \@ddperiod@fter{\ifx\tmp\empty\else\tmp{}\fi\ifx \tmptmp\empty\else\tmptmp{}\fi}}\setcounter{pr@viousCommentline}{\value{\linecounter}}}
+    \@ddperiod@fter{\ifx\tmp\empty\else\tmp{} \fi\ifx \tmptmp\empty\else\tmptmp{}\fi}}\setcounter{pr@viousCommentline}{\value{\linecounter}}}
 \newcommand{\vocablemmanoteParaFull}[5][]{%
 % arguments: [remark before]{text}{lemma}{meaning}{comment}
   \def\tmp{#1}%
@@ -132,7 +132,7 @@
   \vocfootnote{%
     \ifnum\the\value{pr@viousline}=\the\value{\linecounter}\else\ifvocPerline\ifnum\the\value{pr@viousline}>0\newline\fi\makebox[\voclinenowidth][r]{\textbf{\thelinecounter}} \else\textbf{\thelinecounter} \fi\fi%
     \emph{#3}\hskip0.1ex\vocabseparator{}%
-    \@ddperiod@fter{\ifx \tmp\empty\else\tmp{}\fi\ifx \tmptmp\empty\else ‚\tmptmp{}‘\ifx \tmptmptmp\empty\else\ \fi\fi\ifx \tmptmptmp\empty\else \tmptmptmp{}\fi}}\setcounter{pr@viousline}{\value{\linecounter}}}
+    \@ddperiod@fter{\ifx \tmp\empty\else\tmp{} \fi\ifx \tmptmp\empty\else ‚\tmptmp{}‘\ifx \tmptmptmp\empty\else\ \fi\fi\ifx \tmptmptmp\empty\else \tmptmptmp{}\fi}}\setcounter{pr@viousline}{\value{\linecounter}}}
 \let\commentfootnote=\freefootnoteE
 \newcommand{\vocablemmanoteClassicFull}[5][]{%
 % arguments: [remark before]{text}{lemma}{meaning}{comment}
@@ -161,7 +161,7 @@
     \let\commentfootnote=\freefootnoteE
   }
 \newcommand{\paraVocabnotes}{
-  \let\vocablemmanote=\vocablemmanotePara
+  \let\vocablemmanoteFull=\vocablemmanoteParaFull
   \let\vocfootnote=\freefootnoteC
   \let\vocablemmaComment=\vocablemmaCommentPara
   \let\voclemCom=\vocablemmaCommentPara
