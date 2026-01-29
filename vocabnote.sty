@@ -104,8 +104,8 @@
   \fi
 \fi
 \newif\ifvocPerline\vocPerlinefalse
-\newif\ifvocMark\vocMarktrue
-\newif\ifcommentMark\vocMarktrue
+\newif\ifvocMark\vocMarkfalse
+\newif\ifcommentMark\commentMarkfalse
 \newif\ifcommentPerline\commentPerlinefalse
 \newlength{\voclinenowidth}
 \setlength{\voclinenowidth}{3ex}
@@ -175,9 +175,16 @@
   \let\vocfootnote=\footnote
   \let\commentfootnote=\footnote
 }
+\newcommand{\setMarksOff}{\vocMarkfalse\commentMarkfalse}
+\newcommand{\setMarksOn}{\vocMarktrue\commentMarktrue}
 \newcommand{\resetMarks}{
+  \setMarksOff{}
   \ifx\commentfootnote\freefootnoteE\commentMarktrue\fi%
-  \ifx\commentfootnote\freefootnoteE\vocMarktrue\fi%
+  \ifx\vocfootnote\freefootnoteE\vocMarktrue\fi%
+  \ifx\commentfootnote\freefootnoteC\commentMarktrue\fi%
+  \ifx\vocfootnote\freefootnoteC\vocMarktrue\fi%
+  \ifx\commentfootnote\freefootnoteNormal\commentMarktrue\fi%
+  \ifx\vocfootnote\freefootnoteNormal\vocMarktrue\fi%
 }
 \classicVocabnotes
 \newlength{\vocabboxwidth}
@@ -193,9 +200,17 @@
     \def\tmp{#1}%
     \makebox[\vocabboxwidth][l]{\emph{#2} (Z. \ref{\ifx \tmp\empty word:#2\else word:#1\fi}):} \hfill\rule{\vocabboxlinewidth}{.4pt}\zeilen{1}
 }
+\newcommand{\vocabboxAW}[3][]{%
+    \def\tmp{#1}%
+    \makebox{\emph{#2} (Z. \ref{\ifx \tmp\empty word:#2\else word:#1\fi}):} \hspace{1em}\antwort{#3}%
+}
 \newcommand{\wordbox}[2][]{%
     \def\tmp{#1}%
     \makebox[\wordboxwidth][l]{\emph{#2} (Z. \ref{\ifx \tmp\empty word:#2\else word:#1\fi}):} \hfill\rule{\vocabboxlinewidth}{.4pt}
+}
+\newcommand{\wordboxAW}[3][]{%
+    \def\tmp{#1}%
+    \makebox{\emph{#2} (Z. \ref{\ifx \tmp\empty word:#2\else word:#1\fi}):} \hspace{1em}\antwort{#3}
 }
 \newlength{\tmpphrasewidth}
 \newlength{\restphrasewidth}
@@ -206,6 +221,14 @@
     \addtolength{\restphrasewidth}{-\tmpphrasewidth}%
     \addtolength{\restphrasewidth}{-4em}%
     \makebox[\tmpphrasewidth][l]{\emph{#2} (Z. \ref{\ifx \tmp\empty word:#2\else word:#1\fi}):} \hfill\rule{\restphrasewidth}{.4pt}\zeilen{1}
+}
+\newcommand{\phraseboxAW}[3][]{%
+    \def\tmp{#1}%
+    \setlength{\tmpphrasewidth}{\widthof{#2}}
+    \setlength{\restphrasewidth}{\phraseboxlinewidth}\setlength{\restphrasewidth}{\linewidth}%
+    \addtolength{\restphrasewidth}{-\tmpphrasewidth}%
+    \addtolength{\restphrasewidth}{-4em}%
+    \makebox{\emph{#2} (Z. \ref{\ifx \tmp\empty word:#2\else word:#1\fi}):} \hspace{1em}\antwort{#3}
 }
 \makeatother
 \usepackage{forloop}
